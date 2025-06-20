@@ -17,6 +17,6 @@
     function sendHello() {
         var popup = window.open('http://localhost:3300/sign-in');
         console.log(`🚀 - ${new Date().toLocaleString()} ~ sendHello ~ popup:`, popup);
-        popup.postMessage("Hello, window-2! i am window-1", 'http://localhost:3300');
+        popup.postMessage({ demo: 'test'}, 'http://localhost:3300');
     }
 </script>
