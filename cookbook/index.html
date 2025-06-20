@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML Parser & Quirks - A Cookbook</title>
+</head>
+<style>
+	html{
+  --color-secondary: #30302f;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    font-family: 'Space Mono', monospace;
+    background-color: #2c2c2c;
+    color: #fff;
+
+    display: grid;
+    background-color: black;
+    margin: 0rem;
+
+}
+h1{
+	color: #0ABABA;
+}
+
+h2{
+	color: black;
+}
+.faq {
+  padding: 40px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  color: black;
+}
+
+
+
+details {
+  background-color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 20px 30px;
+  margin-block: 30px;
+}
+
+summary,
+p {
+  text-align: left;
+}
+
+summary {
+  margin-inline-start: 1rem;
+  list-style-position: outside;
+}
+
+summary::marker {
+  color: #8b7197;
+  font-size: 18px;
+}
+.code-block {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', 'Fira Code', 'Courier New', Courier, monospace;
+  font-weight: 300;
+  font-size: 16px;
+  padding: 16px;
+  overflow-x: auto;
+  line-height: 1.5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid #3c3c3c;
+  text-align: left; /* Ensures text is left-aligned */
+}
+
+.code-block code {
+  display: block;
+  white-space: pre-wrap;
+  text-align: left; /* Left-aligns code inside */
+}
+
+
+.code-block::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.code-block::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.code-block::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+</style>
+<body>
+<center><h1>HTML Parser & Quirks - A Cookbook</h1></center>
+<p><b style="color:#0ABABA;">HTML Parser & Quirks</b> - A Cookbook: A collection of recipes exploring HTML parsing behaviors, treating parsing techniques as ingredients to craft structured data from raw markup. 🍽️📜</p>
+
+<div class="faq">
+	 <details>
+    <summary><b style="color:#0ABABA;">Parsing,Styling,Layout,Painting</b></summary>
+    <p>When you visit a webpage, you see the final visual content, but have you ever wondered how it's actually rendered? Behind the scenes, the browser goes through several steps to process the data, turning raw code into the interactive page you see. Let’s break down these steps in simple terms.
+<br><br>
+
+    	<p><b style="color:#0ABABA;">1.Parsing [Building the DOM]</b> - The browser reads the HTML code and converts it into a structured representation called the DOM (Document Object Model).Each HTML tag becomes a DOM node, forming a tree-like structure.</p><br>
+    	<img src="parsing.jpg" height=400px width=600px>	<img src="dom.jpg" height=400px width=600px>
+
+    	<p><b style="color:#0ABABA;">2.Styling [Applying CSS]</b>  - The browser processes CSS and figures out how each element should look (color, size, fonts, etc.).This information is applied to the corresponding DOM nodes.</p><br>
+    	    	<img src="style2.jpg" height=400px width=600px>	<img src="style1.jpg" height=400px width=600px>
+
+
+    	<p><b style="color:#0ABABA;">3.Layout [Positioning Elements</b> - The browser calculates the exact position and size of each element based on CSS rules and the structure of the page.This step ensures elements don’t overlap incorrectly and fit properly on the screen.</p><br>
+    	<img src="layout.jpg" height=400px width=600px>
+
+    	<p><b style="color:#0ABABA;">4.Painting [Rendering Pixels]</b> - The browser takes all the information from the previous steps and paints the pixels onto the screen.This is when the page becomes visible to you.</p><br>
+    	    	<img src="paint.png" height=400px width=600px><br>
+    	ref: <a href="https://www.chromium.org/developers/the-rendering-critical-path/">The rendering critical path</a><br>
+    	ref:<a href="https://docs.google.com/presentation/d/1boPxbgNrTU0ddsc144rcXayGA_WF53k96imRH8Mp34Y/edit#slide=id.ga884fe665f_64_188">The life of a pixel</a>- The images used were from the slides.<br>
+                  <a href="https://www.youtube.com/watch?v=a2_6bGNZ7bA">Faster HTML and CSS: Layout Engine Internals for Web Developers</a>- Interesting video from the past !<br>
+
+
+
+</p>
+  </details>
+  <details>
+    <summary><b style="color:#0ABABA;">HTML Parsing: Understanding the Backbone of Web Rendering</b></summary>
+    <p>HTML parsing is the process of reading an HTML document and converting it into a structured format that can be processed by a browser,Parsing a HTML document goes through the below stages !</p>
+    <p><img src="stages.png" height=250px width=250px><br></p>
+    <p><b style="color:#0ABABA;">Example:</b>&lt;!doctype html&gt;&lt;p&gt;helloworld
+    <p>Lets take the above example and lets have a look at how the parser go through each steps.<br><br>
+    <p>1.Bytes go over the network and a decoder will produce a stream of code points.
+    <p>2.The tokenizer walks through the stream of code points,character by character and emit tokens
+    <p>3.A doctype token,a start tag token(p) and a series of character tokens are generated.
+    <p>4.The tree builder take those tokens and builds the below dom.<br>
+    <pre style="text-align: left;">
+Document 
+	└── html 
+    		└── body 
+        		└── p 
+            		    └── #text: helloworld
+    </pre>
+    <img src="helloworld.png">
+    <p>A simple helloworld to be displayed ! it need to go through all the steps.<br>
+    	<center>ref: <a href="https://htmlparser.info/">Idiosyncrasies of the HTML parser</a>
+  </details>
+  <details>
+    <summary><b style="color:#0ABABA;">Content Type:</b></summary>
+    <p>The HTTP Content-Type representation header is used to indicate the original media type of a resource before any content encoding is applied.<br>
+    Imagine there is no content-type header? how will browser sniff the content?</p>
+    <p> Lets take a example by rendering a sweet &lt;h1&gt; heading tag and see the response?</p>
+    <img src='renderh1.png' height=300px width=600px><p> Anyway its expected to be render as html and it did ! no wonder...
+    <p>Lets take another example by rendering a &lt;h2&gt; tag !
+      <center><img src='renderh2.png' height=300px width=600px><p>what happens now? whys h2 tag is rendered as text :0
+        <p>This is because there is a set of rules/code that is in place which is reponsible for detection of a content.
+          <p>Below is the code of HTML sniffer.Basically it tells the browser the need for certain tags to be rendered as an html page.
+<pre class="code-block">
+// Our HTML sniffer differs slightly from Mozilla.  For example, Mozilla will
+// decide that a document that begins &#x22;&#x3C;!DOCTYPE SOAP-ENV:Envelope PUBLIC/&#x22; is
+// HTML, but we will not.
+
+#define MAGIC_HTML_TAG(tag) \
+  MAGIC_STRING(&#x22;text/html&#x22;, &#x22;&#x3C;&#x22; tag)
+
+static const MagicNumber kSniffableTags[] = {
+  // XML processing directive.  Although this is not an HTML mime type, we sniff
+  // for this in the HTML phase because text/xml is just as powerful as HTML and
+  // we want to leverage our white space skipping technology.
+  MAGIC_NUMBER(&#x22;text/xml&#x22;, &#x22;&#x3C;?xml&#x22;),  // Mozilla
+  // DOCTYPEs
+  MAGIC_HTML_TAG(&#x22;!DOCTYPE html&#x22;),  // HTML5 spec
+  // Sniffable tags, ordered by how often they occur in sniffable documents.
+  MAGIC_HTML_TAG(&#x22;script&#x22;),  // HTML5 spec, Mozilla
+  MAGIC_HTML_TAG(&#x22;html&#x22;),  // HTML5 spec, Mozilla
+  MAGIC_HTML_TAG(&#x22;!--&#x22;),
+  MAGIC_HTML_TAG(&#x22;head&#x22;),  // HTML5 spec, Mozilla
+  MAGIC_HTML_TAG(&#x22;iframe&#x22;),  // Mozilla
+  MAGIC_HTML_TAG(&#x22;h1&#x22;),  // Mozilla
+  MAGIC_HTML_TAG(&#x22;div&#x22;),  // Mozilla
+  MAGIC_HTML_TAG(&#x22;font&#x22;),  // Mozilla
+  MAGIC_HTML_TAG(&#x22;table&#x22;),  // Mozilla
+  MAGIC_HTML_TAG(&#x22;a&#x22;),  // Mozilla
+  MAGIC_HTML_TAG(&#x22;style&#x22;),  // Mozilla
+  MAGIC_HTML_TAG(&#x22;title&#x22;),  // Mozilla
+  MAGIC_HTML_TAG(&#x22;b&#x22;),  // Mozilla
+  MAGIC_HTML_TAG(&#x22;body&#x22;),  // Mozilla
+  MAGIC_HTML_TAG(&#x22;br&#x22;),
+  MAGIC_HTML_TAG(&#x22;p&#x22;),  // Mozilla
+};
+
+// ...
+
+// Returns true and sets result if the content appears to be HTML.
+// Clears have_enough_content if more data could possibly change the result.
+static bool SniffForHTML(base::StringPiece content,
+                         bool* have_enough_content,
+                         std::string* result) {
+  // For HTML, we are willing to consider up to 512 bytes. This may be overly
+  // conservative as IE only considers 256.
+  *have_enough_content &#x26;= TruncateStringPiece(512, &#x26;content);
+
+  // We adopt a strategy similar to that used by Mozilla to sniff HTML tags,
+  // but with some modifications to better match the HTML5 spec.
+  base::StringPiece trimmed =
+      base::TrimWhitespaceASCII(content, base::TRIM_LEADING);
+
+  // |trimmed| now starts at first non-whitespace character (or is empty).
+  return CheckForMagicNumbers(trimmed, kSniffableTags, result);
+}
+</pre>
+  <h1><p> Quick Question : </h1>
+    <p>If no content type is defined, are only the HTML elements/tags listed below responsible for rendering HTML, or can rendering be forced using other methods or elements?
+      <pre class="code-block">
+        &lt;!DOCTYPE html&gt;,&lt;script&gt;,&lt;html,&lt;!--&gt;,&lt;head&gt;,&lt;iframe&gt;,&lt;h1&gt;,&lt;div&gt;,&lt;font&gt;,&lt;table&gt;,&lt;a&gt;,&lt;style&gt;,&lt;title&gt;,&lt;body&gt;,&lt;br&gt;,&lt;p&gt;
+      </pre>
+      <img src='picture.jpg' height=300px width=600px>
+<p>Interestingly the picture element works ! but it is not defined on the deciding sniffer file, then how?
+<p> Since the picture tag starts with 'p' and the MAGIC_HTML_TAG(&#x22;p&#x22;) checks for p,anything starts with p 'picture','progress' tags will work and make the content render as HTML..
+  <p>I came to know about this behaviour/working through a challenge from Dreamhack wargame <a href="https://dreamhack.io/wargame/challenges/1787">Small File Storage</a> ! Thanks to my friends <b style="color:#0ABABA;">0xAlessandro</b> and <b style="color:#0ABABA;">Yuu</b>.
+<p>To learn more about this visit <a href="https://aszx87410.github.io/beyond-xss/en/ch5/mime-sniffing/">Mime Sniffing</a>
+
+  </details>
+  <details>
+    <summary><b style="color:#0ABABA;">Character encoding:</b></summary>
+    <p>HTML parser need to know the definite encoding to operate on an input byte stream of the document.
+    <p>The character encoding can be defined using meta tag &lt;meta charset="utf-8"&gt; or it can be specified at the transport layer, HTTP Content-Type with charset parameter which gives the encoding of the document.</p>
+    <p>The document can also start with Byte Order Mark (BOM),If the document starts with the bytes given in the below column,then return the encoding correspondingly.</p>
+      <img src='bom.png'>
+      <p>The precedence order for character encoding is Byte Order Mark (BOM) > HTTP Content-Type Header > Meta Tag in HTML rendering.</p>
+      <p>Before the HTML parser starts,a prescan of the byte stream can take place in an attempt to find the character encoding declaration.The prescan is usually done on the first 1024 bytes and there's a requirement for documents to include encoding declaration within 1024 bytes.
+          <h1><p> Quick Question : </h1>
+            <p>What if no charset is defined ?
+              <p>If no encoding declaration is found,then the default will usually depend on the user's locale and the most common default is windows-1252.
+                      <center><img src='nochar.png' height=300px width=600px>
+              <p> We can also abuse Encoding Differentials in absence of charsets, you can read more about it here <a href="https://www.sonarsource.com/blog/encoding-differentials-why-charset-matters/"> Encoding Differentials: Why Charset Matters </a>
+
+        </details>
+
+    <details>
+    <summary><b style="color:#0ABABA;">Error Handling:</b></summary>
+    <p>The HTML parser spec gives clear instructions on how to deal with errors that come up while reading an HTML document. Technically, a browser could stop processing if it hits an error, but that’s not what happens in practice. Instead, browsers follow the spec's rules for handling errors and fix the issues in a way that makes sure the content still loads and looks right.
+    <p>The spec has a set of steps for how to recover from errors, which helps browsers keep going even when something goes wrong. This process makes sure web pages show up correctly, even if there are some mistakes in the HTML. It's really important because not all HTML is perfect, and this approach helps browsers keep things working smoothly for users.
+    <p>When the HTML parser encounters issues like unclosed tags, missing quotes, or incorrect tag nesting, it doesn't stop or crash. Instead, it tries to fix these errors so that the page can still be displayed as correctly as possible.
+        <h3><p> Examples : </h3>
+          <center><img src='close.png' height=300px width=800px></center><br>
+      <center>Unclosed Tags - I'll Close It ! - The open p tag is automatically closed when the parser encounters the missing close tag.<br><br>
+       <center><img src='attriclose.png' height=300px width=800px></center><br>
+
+        <center>Missing Quotes - I'll Add It - The image tag is missing attribute quotes hence the parser add's it.</center><br>
+      <center><img src='nestclose.png' height=300px width=800px></center><br>
+
+        <center>Incorrect Nesting - I'll Fix It - Semantically wrong - Heading tag cannot be a child of another Heading tag, So the parser just adjust it in a meaningfull way.</center><br>
+
+
+  </details>
+
+  <details>
+    <summary><b style="color:#0ABABA;">Adoption Agency Algorithm :</b></summary>
+    <p>The Adoption Agency Algorithm is a process used in HTML to fix incorrect nesting of elements.
+      <pre class="code-block">
+        &lt;p>1&lt;b>2&lt;i>3&lt;/b>4&lt;/i>5&lt;/p>
+      </pre>
+            <center><img src='bi1.png' height=200px width=400px></center><br>
+
+  </details>
+
+</div>
+</body>

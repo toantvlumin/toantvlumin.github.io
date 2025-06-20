@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mutation Sniper</title>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/kabilan1290/kabilan1290.github.io/refs/heads/main/sniper/favicon_io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/kabilan1290/kabilan1290.github.io/refs/heads/main/sniper/favicon_io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="https://raw.githubusercontent.com/kabilan1290/kabilan1290.github.io/refs/heads/main/sniper/favicon_io/site.webmanifest">
+</head>
+<style>
+html{
+  --color-secondary: #30302f;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    font-family: 'Space Mono', monospace;
+    background-color: #2c2c2c;
+    color: #fff;
+
+    display: grid;
+    background-color: black;
+    margin: 0rem;
+
+}
+
+ .hover-text {
+            display: inline-block;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            position: relative;
+        }
+
+ .chatbox {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 5px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            border-radius: 8px;
+        }
+
+
+input{
+  position: relative;
+  transition: width 0.4s ease-out;
+  font-family: 'Space Mono', monospace;
+  border-radius: 100px;
+  border: 1.5px solid #fff;
+  margin-top: 27px;
+  padding: 10px 10px;
+  background-color: var(--background);
+  color: white;
+  width: 48px;
+  transform: scale(2);
+}
+
+::placeholder {
+color: #ccc;
+}
+input:hover{
+  width: 15vw;
+}
+input:focus{
+  background-color: #333;
+  outline: none;
+  color: white;
+  width: 40vw;
+  box-shadow: 0px 0px 10px #fff1;
+}
+
+
+.tab-bar {
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tab-button {
+    background-color: #444;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 5px;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.tab-button:hover {
+    background-color: #555;
+}
+
+.tab-button.active {
+    background-color: #E74C3C;
+}
+
+.tab-content {
+    display: none;
+    padding: 0px 20px 20px; /* Adjusted for fixed tab bar */
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+
+/* grid----------------------------------------  grid  */
+.tab-content.active {
+    display: block;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: 90vw;
+    height: 90vh;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+#searchBar{
+  margin-bottom: 30px;
+}
+.content {
+    text-align: center;
+}
+.green {background-color: #1ABC9C; grid-column: span 1; grid-row: span 3; }
+.red { background-color: #E74C3C; grid-column: span 1; grid-row: span 2; }
+.red2 { background-color: #0ABABA; grid-column: span 1; grid-row: span 2; }
+.green2 {background-color: #E74C3C; grid-column: span 1; grid-row: span 3; }
+
+.cyan { background-color: #1ABC9C; grid-column: span 1; grid-row: span 1; }
+.cyan2 { background-color: #2F2F2F; grid-column: span 1; grid-row: span 1; }
+
+.gold { background-color: #F39C12; grid-column: span 2; grid-row: span 1; }
+.white { background-color: #ECF0F1; color: #333; grid-column: span 3; grid-row: span 1; }
+
+h2 {
+    margin: 0;
+    font-size: 1.9rem; 
+    font-weight: bold;
+
+}
+
+p {
+    margin: 10px 0 0 0;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+a { 
+    color:white;
+    font-family: 'Space Mono', monospace;
+    text-decoration:none;
+}
+
+.white p {
+    color: rgba(51, 51, 51, 0.8);
+}
+
+
+h1 {
+  font-size: clamp(3rem, 3rem, 3rem);
+  color: white;
+  text-align: center; 
+}
+
+
+
+
+body.menu-toggled > .meta-link > span {
+  color: rgb(30, 30, 30);
+}
+
+#source-link {
+  bottom: 60px;
+}
+
+#source-link > i {
+  color: rgb(94, 106, 210);
+}
+
+#yt-link > i {
+  color: rgb(239, 83, 80);
+}
+
+.meta-link {
+  align-items: center;
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  bottom: 10px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  cursor: pointer;  
+  display: inline-flex;
+  gap: 5px;
+  left: 10px;
+  padding: 10px 20px;
+  position: fixed;
+  text-decoration: none;
+  transition: background-color 400ms, border-color 400ms;
+  z-index: 10000;
+}
+
+.meta-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.meta-link > i, .meta-link > span {
+  height: 20px;
+  line-height: 20px;
+}
+
+.meta-link > span {
+  color: white;
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+}
+/* ----------------------felx */
+
+#flexbox {
+  padding: 20px;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.flex-item {
+  background: linear-gradient(135deg, #7f00ff, #e100ff);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.flex-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Different sizes for different items */
+.item1, .item5, .item10 {
+  flex: 1 1 20%;
+  height: 120px;
+}
+
+.item2, .item9, .item13 {
+  flex: 2 1 45%;
+  height: 120px;
+}
+
+.item3, .item6, .item14 {
+  flex: 3 1 70%;
+  height: 120px;
+}
+
+.item4, .item7, .item8, .item12, .item15 {
+  flex: 1 1 45%;
+  height: 120px;
+}
+
+.item11 {
+  flex: 3 1 100%;
+  height: 120px;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .flex-item {
+    flex: 1 1 100%;
+  }
+}
+
+/* Responsive grid for mobile devices */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr); /* Reduce columns to 2 for smaller screens */
+        grid-template-rows: auto; /* Allow rows to adjust based on content */
+        gap: 8px; /* Slightly smaller gap for compact layout */
+        height: auto; /* Adjust height for scrolling */
+
+    }
+
+    .green, .red, .red2, .green2, .cyan, .cyan2, .gold, .white{
+        grid-column: span 2; /* Span full width for better visibility on mobile */
+        grid-row: auto;
+        max-width:80%; /* Let rows adjust dynamically */
+
+    }
+
+
+
+}
+
+/* For very small devices (phones in portrait mode) */
+@media (max-width: 480px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* Single column layout for the smallest screens */
+        gap: 5px; /* Smaller gap for compact layout */
+    }
+
+    .item {
+        padding: 15px; /* Reduce padding for smaller screen real estate */
+    }
+
+    .green, .red, .red2, .green2, .cyan, .cyan2, .gold, .white{
+        grid-column: span 1; /* Full width per item */
+        max-width:80%;
+        justify-content: center;
+      }
+
+}
+
+/* else-------------------- else */
+
+
+
+
+.hashtag {
+  font-weight: bold;
+  font-family: 'Space Mono', monospace;
+
+}
+
+.keyword {
+  font-family: 'Space Mono', monospace;
+
+}
+
+button.topics {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7em;
+  text-align: center;
+  text-transform: lowercase;
+  vertical-align: middle;
+  padding: 6px 10px;
+  margin-top: 12px;
+  color: #636363;
+  background-color: #fff;
+  border: solid 2px #636363;
+  box-shadow: rgba(77, 77, 77, 0.94) 5px -4px 0px 0px;
+  border-radius: 10px 10px 10px 0px;
+  transition: box-shadow 0.3s;
+  cursor: pointer;
+}
+
+button.topics.alt1 {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7em;
+  text-align: center;
+  text-transform: lowercase;
+  vertical-align: middle;
+  padding: 6px 10px;
+  margin-top: 6px;
+  color: #fff;
+  background-color: #30302f;;
+  border: solid 2px #fff;
+  box-shadow: rgba(128, 128, 128, 0.94) 5px -4px 0px 0px;
+  border-radius: 10px 10px 10px 0px;
+  transition: box-shadow 0.3s;
+  cursor: pointer;
+}
+
+button.topics:hover {
+  box-shadow: rgba(77, 77, 77, 0.94) 0px 0px 0px 0px;
+}
+
+button.topics:active {
+  transform: translateY(1.5px);
+}
+
+.topics:hover .keyword {
+  text-decoration: underline;
+}
+
+.button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.namespace-btn {
+    font-family: 'Space Mono', monospace;
+    padding: 10px 20px;
+    margin-left: 12px;
+    font-size: 16px;
+    background-color:#0ABABA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.namespace-btn:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.namespace-btn.active {
+    background-color: #2ecc71; /* Green for active state */
+    transform: scale(1.1);
+}
+
+    .item {
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.6s ease-in-out, scale 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+    .item.flipped {
+        transform: rotateY(180deg) scale(1.3);
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 350px;
+        height: 350px;
+        margin-top: -175px;
+        margin-left: -150px;
+        z-index: 100;
+    }
+
+    .item-front, .item-back {
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .item-front {
+        background-color: inherit;
+    }
+
+    .item-back {
+        background-color: #28282B   ;
+        color: white;
+        transform: rotateY(180deg);
+        display: none;
+    }
+
+    .item.flipped .item-front {
+        display: none;
+    }
+
+    .item.flipped .item-back {
+        display: flex;
+        backface-visibility: visible;
+    }
+
+    /* Spotlight Effect */
+    .dimmed {
+        background: white;
+        pointer-events: none;
+    }
+
+</style>
+<body>
+
+
+<script>
+  function showTab(tabId) {
+            // Hide all tab contents
+            var contents = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].classList.remove('active');
+            }
+
+            // Deactivate all tab buttons
+            var buttons = document.getElementsByClassName('tab-button');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+
+            // Show the selected tab content and activate the button
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+      </script>
+     
+<h1 data-value="MUTATION SNIPER">MUTATION SNIPER</h1>
+  <center><input type="text" id="searchBar" placeholder="Search" onkeyup="searchItems()"></center>
+
+<div id="grid" class="tab-content active">
+
+<p id="heading">• <a href="https://www.w3.org/1999/xhtml/" style="color:#0ABABA;">HTML5</a> added new ways to include special content on web pages, like graphics with <a href="https://www.w3.org/2000/svg" style="color:#0ABABA;">&lt;svg&gt;</a> or math formulas with <a href="https://www.w3.org/1998/Math/MathML/" style="color:#0ABABA;">&lt;math&gt;</a>. These elements are treated differently by web browsers than regular HTML, which means they follow their own set of rules and have their own namespace.
+<br><br>• I have retrieved elements with their behaviour towards mutation from the paper <a href="https://www.ias.cs.tu-bs.de/publications/parsing_differentials.pdf" style="color:#0ABABA;">Parse Me, Baby, One More Time: Bypassing HTML Sanitizer via Parsing Differentials.</a></p><br><br>
+    <div class="button-container">
+        <button class="namespace-btn" id="html-btn">HTML Namespace</button>
+        <button class="namespace-btn" id="svg-btn">SVG Namespace</button>
+        <button class="namespace-btn" id="mathml-btn">MathML Namespace</button>
+    </div>
+  <div class="grid-container">
+    <div class="item red" onclick="flipCard(event, this)">
+    <div class="item-front">
+      <div class="content">
+        <h2>img</h2>
+    <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>    <button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#void-elements" style="text-decoration:none;color:white">void element</a></span></button>
+        <p>Typical HTML element which can carry XSS Payloads in Event handlers.</p>            
+      </div>
+
+    </div>
+                  <div class="item-back">
+            IMG tag is an void element,it does not require a closing tag while parsing!
+        </div>
+</div>
+
+        <div class="item cyan2" onclick="flipCard(event, this)">
+        <div class="item-front">
+      <div class="content">
+        <h2>script</h2>
+    <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#raw-text-elements">rawtext element</a></span></button>
+        <p>Typical HTML element which can carry XSS Payloads.</p>            
+      </div>
+    </div>
+                      <div class="item-back">
+            <p>IMG tag is an void element it does not require a closing tag</p>
+        </div>
+    </div>
+
+
+    <div class="item cyan" onclick="flipCard(event, this)">
+            <div class="item-front">
+      <div class="content">
+        <h2>image</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics"><span class="hashtag"># </span><span class="keyword">SVG NAMESPACE</span></button><button class="topics"><span class="hashtag"># </span><span class="keyword">MATH NAMESPACE</span></button>
+        <p> In HTML treated as img, valid SVG or MathML element.</p>
+      </div>
+    </div>
+                      <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+        <div class="item green2" onclick="flipCard(event, this)">
+                <div class="item-front">
+
+      <div class="content">
+        <h2>template</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#the-template-element-2">template element</a></span></button>
+        <p>By default, the element's content is not rendered,Can render content in other SVG or MathML namespaces.</p>
+      </div>
+    </div>
+                          <div class="item-back">
+            <p>Details here</p>
+        </div>
+</div>
+    <div class="item gold" onclick="flipCard(event, this)">
+                        <div class="item-front">
+
+      <div class="content">
+        <h2>div,span</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Basic HTML element,terminate foreign content.</p>
+        
+      </div>
+    </div>
+                              <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    <div class="item white" onclick="flipCard(event, this)">
+                        <div class="item-front">
+
+      <div class="content">
+        <h2>object</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Basic HTML element.
+      </div>
+    </div>
+                                  <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    <div class="item gold" onclick="flipCard(event, this)">
+                                <div class="item-front">
+
+      <div class="content">
+        <h2>form</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Form elements cannot be nested enforced by parsing specification.</p>
+      </div>
+    </div>
+                                      <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    <div class="item red" onclick="flipCard(event, this)">
+             <div class="item-front">
+
+      <div class="content">
+        <h2>dfn,header</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Both cannot be nested,not enforced by parsing specification.</p>
+      </div>
+    </div>
+                                          <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    <div class="item green" onclick="flipCard(event, this)">
+                     <div class="item-front">
+
+      <div class="content">
+        <h2>p</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Terminates foreign content,optional end tag.</p>
+      </div>
+    </div>
+                                              <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    <div class="item red2" onclick="flipCard(event, this)">
+    <div class="item-front">
+
+      <div class="content">
+        <h2>br,embed</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#void-elements" style="text-decoration:none;color:white">void element</a></span></button>
+        <p>No end tag, no content allowed,terminate foreign content.</p>
+      </div>
+    </div>
+                                                  <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    <div class="item cyan" onclick="flipCard(event, this)">
+            <div class="item-front">
+
+      <div class="content">
+        <h2>input</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#void-elements" style="text-decoration:none;color:white">void element</a></span></button>
+        <p>No end tag,no content allowed.</p>
+      </div>
+    </div>
+                                                      <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    
+    <div class="item gold" onclick="flipCard(event, this)">
+                    <div class="item-front">
+
+      <div class="content">
+        <h2>a</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>No interactive content allowed,example : iframe,not enforced by parsing sepcification.</p>
+        
+      </div>
+    </div>
+                                                          <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+              <!--------------->
+
+        <div class="item red" onclick="flipCard(event, this)">
+                                <div class="item-front">
+      <div class="content">
+        <h2>noscript</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#raw-text-elements">rawtext element</a></span></button>
+        <p>Parsed differently depending on scripting flag : either HTML or javascript content.</p>
+      </div>
+    </div>
+                                                              <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    <div class="item cyan" onclick="flipCard(event, this)">
+                                        <div class="item-front">
+
+      <div class="content">
+        <h2>table</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Open's a table,parsing specification enforces no nesting,terminates foreign content.</p>
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item gold" onclick="flipCard(event, this)">
+             <div class="item-front">
+
+      <div class="content">
+        <h2>td,tr,colgroup</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Restrictive content,together they make up a table.</p>
+        
+      </div>
+    </div>
+            <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item white" onclick="flipCard(event, this)">
+        <div class="item-front">
+
+      <div class="content">
+        <h2>select</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Only option,optgroup and script supporting content are allowed,special parsing rules when inside table.
+      </div>
+    </div>
+                <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item gold" onclick="flipCard(event, this)">
+    <div class="item-front">
+
+      <div class="content">
+        <h2>option</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Restriction on where it can occur,depending on attribute values allwed content changes.</p>
+      </div>
+    </div>
+                    <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item red" onclick="flipCard(event, this)">
+        <div class="item-front">
+      <div class="content">
+        <h2>textarea</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#escapable-raw-text-elements">escapable rawtext element</a></span></button>
+        <p>Only text content.</p>
+      </div>
+    </div>
+                        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item green" onclick="flipCard(event, this)">
+            <div class="item-front">
+      <div class="content">
+        <h2>keygen</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Not supported anymore,no content,no end tag.</p>
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    <!---->
+    <div class="item red" onclick="flipCard(event, this)">
+           <div class="item-front">
+      <div class="content">
+        <h2>xmp</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#raw-text-elements">rawtext element</a></span></button>
+        <p>No element specification anymore,still has parsing rules,used to render markup as text without executing it.</p>
+      </div>
+    </div>
+            <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item cyan" onclick="flipCard(event, this)">
+         <div class="item-front">
+      <div class="content">
+        <h2>frameset</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>No element specification anymore,still has parsing rules.</p>
+      </div>
+    </div>
+            <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    
+    <div class="item gold" onclick="flipCard(event, this)">
+             <div class="item-front">
+      <div class="content">
+        <h2>li,ul</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Make up a list,allowed to contain script supporting elements,terminate foreign content.</p>
+        
+      </div>
+    </div>
+                <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+
+
+    <!------------------>
+
+
+
+            <div class="item red" onclick="flipCard(event, this)">
+                         <div class="item-front">
+      <div class="content">
+        <h2>pre,var</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Only allowed to contain phrasing content,terminate foreign content.</p>
+      </div>
+    </div>
+                    <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item cyan" onclick="flipCard(event, this)">
+           <div class="item-front">
+
+      <div class="content">
+        <h2>dl</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Restricted content model,terminates foreign content.</p>
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item gold" onclick="flipCard(event, this)">
+               <div class="item-front">
+      <div class="content">
+        <h2>dt</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button>
+        <p>Shall only occur inside dl,terminates foreign content.</p>
+        
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item white" onclick="flipCard(event, this)">
+                   <div class="item-front">
+      <div class="content">
+        <h2>plaintext</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics alt1"><span class="hashtag"># </span><span class="keyword"> <a href="https://html.spec.whatwg.org/#plaintext-state">plaintext state element</a></span></button>
+        <p>Deprecated.Renders everything below as plain text,can not be closed.
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item gold" onclick="flipCard(event, this)">
+                       <div class="item-front">
+      <div class="content">
+        <h2>noframes,noembed</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#raw-text-elements">rawtext element</a></span></button>
+        <p>No element specification anymore,still have parsing rules,contain raw text element.</p>
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item red" onclick="flipCard(event, this)">
+                           <div class="item-front">
+      <div class="content">
+        <h2>iframe</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics alt1"><span class="hashtag">#<span class="keyword"><a href="https://html.spec.whatwg.org/#raw-text-elements">rawtext element</a></span></button>
+        <p>Iframe element specification says no content allowed,but parsing specification says raw text content.</p>
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item green" onclick="flipCard(event, this)">
+                               <div class="item-front">
+      <div class="content">
+        <h2>svg</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">SVG NAMESPACE</span></button>
+            <button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#foreign-elements">foreign element</a></span></button>
+        <p>Namespace transition from HTML to SVG.</p>
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    <!---->
+    <div class="item red" onclick="flipCard(event, this)">
+                                   <div class="item-front">
+      <div class="content">
+        <h2>foreignObject</h2>
+        <h2>desc,path</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">SVG NAMESPACE</span></button>
+            <button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#foreign-elements">foreign element</a></span></button>
+        <p>Allow to embed HTML segments inside a SVG.</p>
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item cyan" onclick="flipCard(event, this)">
+                                   <div class="item-front">
+      <div class="content">
+        <h2>math</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">MathML NAMESPACE</span></button>
+            <button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#foreign-elements">foreign element</a></span></button>
+        <p>Namespace transistion from HTML to MathML.</p>
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+    
+    <div class="item gold" onclick="flipCard(event, this)">
+<div class="item-front">
+      <div class="content">
+        <h2>mi,mo,mn,mtext</h2>
+        <h2>mglyph,ms,mtext</h2>
+        <h2>annotation-xml,malignmark</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">MathML NAMESPACE</span></button>
+            <button class="topics alt1"><span class="hashtag"># </span><span class="keyword"><a href="https://html.spec.whatwg.org/#foreign-elements">foreign element</a></span></button>
+        <p>Allow to embed HTML segments inside MathML.</p>
+        
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item cyan" onclick="flipCard(event, this)">
+        <div class="item-front">
+      <div class="content">
+        <h2>style,font</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML,SVG NAMESPACE</span></button><button class="topics"><span class="hashtag"># </span><span class="keyword">SVG NAMESPACE</span></button><button class="topics alt1"><span class="hashtag">#<span class="keyword"><a href="https://html.spec.whatwg.org/#raw-text-elements">rawtext element</a></span></button>
+        <p>Text content when in HTML,otherwise markup.</p>
+        <p>Deprecated for both HTML and SVG.
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+    <div class="item white" onclick="flipCard(event, this)">
+            <div class="item-front">
+      <div class="content">
+        <h2>title</h2>
+            <button class="topics"><span class="hashtag"># </span><span class="keyword">HTML NAMESPACE</span></button><button class="topics"><span class="hashtag"># </span><span class="keyword">SVG NAMESPACE</span></button><button class="topics alt1"><span class="hashtag">#<span class="keyword"><a href="https://html.spec.whatwg.org/#escapable-raw-text-elements">escapable rawtext element</a></span></button>
+
+        <p>HTML namespace - text content,singleton: not enforced by parsing specification.
+        <p>SVG namespace - can contain markup.
+      </div>
+    </div>
+        <div class="item-back">
+            <p>Details here</p>
+        </div>
+    </div>
+
+
+  </div>
+</div>
+<script>
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+let interval = null;
+
+document.querySelector("h1").onmouseover = event => {  
+  let iteration = 0;
+  
+  clearInterval(interval);
+  
+  interval = setInterval(() => {
+    event.target.innerText = event.target.innerText
+      .split("")
+      .map((letter, index) => {
+        if(index < iteration) {
+          return event.target.dataset.value[index];
+        }
+      
+        return letters[Math.floor(Math.random() * 26)]
+      })
+      .join("");
+    
+    if(iteration >= event.target.dataset.value.length){ 
+      clearInterval(interval);
+    }
+    
+    iteration += 1 / 3;
+  }, 30);
+}</script>
+
+  <script>
+function searchItems() {
+  const input = document.getElementById('searchBar').value.toLowerCase();
+  const items = document.querySelectorAll('.item');
+  const head = document.getElementById('heading')
+
+  items.forEach(item => {
+    const firstLine = item.querySelector('h2') ? item.querySelector('h2').textContent.toLowerCase() : '';
+ // Logs the first line (the content of the <h2> element)
+
+    if (firstLine.includes(input)) {
+      item.style.display = 'block';
+      head.style.display = 'block';
+    } else {
+      head.style.display = 'none';
+      item.style.display = 'none';
+    }
+  });
+}
+
+const htmlBtn = document.getElementById("html-btn");
+const svgBtn = document.getElementById("svg-btn");
+const mathmlBtn = document.getElementById("mathml-btn");
+
+function handleButtonClick(namespaceBtn) {
+    const selectedNamespace = namespaceBtn.textContent.trim().toLowerCase();  // Get the button text, normalized to lowercase
+    const items = document.querySelectorAll('.item');  // All items to filter
+    const heading = document.getElementById('heading');  // Heading to display when there are results
+
+    // Check if the clicked button is already active
+    const isActive = namespaceBtn.classList.contains('active');
+
+    if (isActive) {
+        // "Unclick" the button: remove active class and show all items
+        namespaceBtn.classList.remove('active');
+        items.forEach(item => {
+            item.style.display = 'block';  // Show all items
+        });
+        // Ensure the heading is always visible when showing all items
+        heading.style.display = 'block';  // Ensure heading is visible
+    } else {
+        // "Click" the button: remove active class from all buttons, add it to the clicked one
+        document.querySelectorAll('.namespace-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        namespaceBtn.classList.add('active');  // Add active class to the clicked button
+
+        let foundAny = false;  // Flag to track if we found any matching items
+        items.forEach(item => {
+            const keywordSpan = item.querySelector('.keyword');  // Find the keyword span inside the item
+            if (keywordSpan) {
+                const keywordText = keywordSpan.textContent.toLowerCase();  // Get the text inside the span (normalized)
+                // Check if the selected namespace matches the keyword inside the span
+                if (keywordText.includes(selectedNamespace)) {
+                    item.style.display = 'block';  // Show the item if it matches
+                    foundAny = true;  // Set the flag to true if at least one item is found
+                } else {
+                    item.style.display = 'none';  // Hide the item if it doesn't match
+                }
+            } else {
+                item.style.display = 'none';  // Hide item if no keyword span is found
+            }
+        });
+
+        // Show or hide the heading based on whether any matching items were found
+        if (foundAny) {
+            heading.style.display = 'block';  // Show heading if there are matching items
+        } else {
+            heading.style.display = 'none';  // Hide heading if no items match
+        }
+    }
+}
+
+// Event listeners for the buttons
+htmlBtn.addEventListener("click", () => handleButtonClick(htmlBtn));
+svgBtn.addEventListener("click", () => handleButtonClick(svgBtn));
+mathmlBtn.addEventListener("click", () => handleButtonClick(mathmlBtn));
+
+  </script>
+
+<script>
+    let activeCard = null;
+
+    function flipCard(event, element) {
+        event.stopPropagation();
+
+        let grid = document.querySelector(".grid-container");
+        let cards = document.querySelectorAll(".item");
+
+        if (activeCard && activeCard !== element) {
+            activeCard.classList.remove("flipped");
+            activeCard = null;
+        }
+
+        element.classList.toggle("flipped");
+
+        if (element.classList.contains("flipped")) {
+            activeCard = element;
+            grid.classList.add("dimmed");
+            element.classList.remove("dimmed");
+        } else {
+            activeCard = null;
+            grid.classList.remove("dimmed");
+        }
+    }
+
+    document.addEventListener("click", function () {
+        if (activeCard) {
+            activeCard.classList.remove("flipped");
+            document.querySelector(".grid-container").classList.remove("dimmed");
+            activeCard = null;
+        }
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>BabyXSS</title>
+  <!-- codepen credits https://codepen.io/tsotne-ts/pen/mdNEBpZ -->
+
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+
+
+<!-- partial:index.partial.html -->
+<div class="container">
+			<center><h1 style="color: white; font-family: 'Indie Flower'">BabyXSS</h1></center>
+    <div class="animated-box"></div>
+  </div>
+<!-- partial -->
+ <script>
+
+function win(){
+	const params = new URL(location.href).searchParams;
+	const redir = params.get('redir');
+	if(redir){
+		var safeLocation = location.href;
+		var notRegular = new RegExp( location.hash, "g" );
+		safeLocation = safeLocation.replace( notRegular, " ");
+		window.location.href = safeLocation;
+	}
+
+}
+win()
+
+
+</script>
+
+</body>
+</html>
