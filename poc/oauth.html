@@ -48,7 +48,6 @@ let foo;
         if (foo.length != baselength) {
             console.log("baselength: " + baselength);
             console.log("foo.length " + foo.length);
-            console.log('foo.location: ', foo.location);
             console.log('Google navigation');
             foo.location.href = "https://accounts.google.com/o/oauth2/v2/auth?client_id=882035726336-rf1ep2l5ltgsbveqhdopi49quc9m6qnr.apps.googleusercontent.com&redirect_uri=https://applications.zoom.us/r/storage/VkVSU046MDAwxllacFGhSCixxyrtt_X29mPRKz1_HO8aC6fO6casoRtn3P-70K8l57U9fdVHq5ahkkhVPpz-_Uf4nvrxijz420GHgRdlIr-LkWdoiD1Ez7m2-m5wmRh9jm8niitzkg&response_type=token&scope=https%3A%2F%2Fmail.google.com%2F";
         }else{
@@ -58,8 +57,6 @@ let foo;
     }
     function launch(){
         foo = window.open(urlParam, "foo", "");
-        console.log("foo data: " + JSON.stringify(foo, null, 2));
-        console.log("foo.length " + foo.length);
         setTimeout(init,1200);
     }
     launch();
