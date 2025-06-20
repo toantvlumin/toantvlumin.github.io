@@ -10,19 +10,24 @@
 <body>
     <h1>This is window 1</h1>
     <button onClick="sendHello()">Send hello to window 2</button>
+    <button onClick="closePopup()">Close window 2</button>
 </body>
 </html>
 
 <script>
+    let popup;
     function sendHello() {
-        var popup = window.open('https://macbook-air.tail6efc57.ts.net/sign-in', 'ReceiverWindow');
+        popup = window.open('https://macbook-air.tail6efc57.ts.net/sign-in', 'ReceiverWindow');
         console.log(`🚀 - ${new Date().toLocaleString()} ~ sendHello ~ popup:`, popup);
         setTimeout(() => {
             popup.postMessage({ from: "GitHub Pages" }, "https://macbook-air.tail6efc57.ts.net");
         }, 2000); // wait for popup to load
+    }
 
-        setTimeout(() => {
+    function closePopup() {
+        if (popup) {
             popup.close();
-        }, 5000);
+            console.log("Popup closed.");
+        }
     }
 </script>
