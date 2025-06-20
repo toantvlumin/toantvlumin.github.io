@@ -20,5 +20,9 @@
         setTimeout(() => {
             popup.postMessage({ from: "GitHub Pages" }, "https://macbook-air.tail6efc57.ts.net");
         }, 2000); // wait for popup to load
+
+        setTimeout(() => {
+            popup.close();
+        }, 5000);
     }
 </script>
