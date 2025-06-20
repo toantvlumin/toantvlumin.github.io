@@ -17,6 +17,8 @@
     function sendHello() {
         var popup = window.open('https://macbook-air.tail6efc57.ts.net/sign-in', 'ReceiverWindow', 'width=600,height=400');
         console.log(`🚀 - ${new Date().toLocaleString()} ~ sendHello ~ popup:`, popup);
-        popup.postMessage({ demo: 'test'}, 'https://macbook-air.tail6efc57.ts.net');
+        setTimeout(() => {
+            popup.postMessage({ from: "GitHub Pages" }, "https://macbook-air.tail6efc57.ts.net");
+        }, 2000); // wait for popup to load
     }
 </script>
