@@ -25,7 +25,7 @@
     }
     var urlParam = getParameterByName('url');
     function sendHello() {
-        var popup = window.open(urlParam, 'window-2');
-        popup.postMessage("Hello, window-2! i am window-1", urlParam);
+        var popup = window.open(urlParam);
+        popup.postMessage("Hello, window-2! i am window-1", 'http://localhost:3300');
     }
 </script>
