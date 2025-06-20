@@ -14,16 +14,6 @@
 </html>
 
 <script>
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
-    var urlParam = getParameterByName('url');
     function sendHello() {
         var popup = window.open('http://localhost:3300/sign-in');
         popup.postMessage("Hello, window-2! i am window-1", 'http://localhost:3300');
