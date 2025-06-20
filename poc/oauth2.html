@@ -58,6 +58,8 @@ let foo;
     }
     function launch(){
         foo = window.open(urlParam, "foo", "");
+        console.log("foo data: " + JSON.stringify(foo, null, 2));
+        console.log("foo.length " + foo.length);
         setTimeout(init,1200);
     }
     launch();
