@@ -25,6 +25,7 @@
     }
 
     function closePopup() {
+        console.log(`🚀 - ${new Date().toLocaleString()} ~ closePopup ~ popup:`, popup);
         if (popup) {
             popup.close();
             popup = null;
