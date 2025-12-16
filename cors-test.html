@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title>CORS Test</title></head>
+<body>
+  <h1>CORS Test</h1>
+  <button onclick="testCors()">Test CORS</button>
+  <pre id="result"></pre>
+  <script>
+    async function testCors() {
+      const result = document.getElementById('result');
+      try {
+        const res = await fetch("https://macbook-air.tail6efc57.ts.net/web/graphql", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: "query TestPublicApi {\n  testPublicApi {\n    message\n    statusCode\n  }\n}" })
+        });
+        result.textContent = `Status: ${res.status}\nHeaders:\n`;
+        res.headers.forEach((v, k) => result.textContent += `${k}: ${v}\n`);
+      } catch (e) {
+        result.textContent = `CORS Blocked: ${e.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
